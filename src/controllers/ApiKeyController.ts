@@ -1,0 +1,68 @@
+import type { DatabaseService } from "../database/DatabaseService";
+import type { ApiKeyScope } from "../middlewares/auth";
+import type { RequestContext } from "../types/api";
+import { sha256 } from "../utils/crypto";
+import { AppError } from "../utils/errors";
+import { json } from "../utils/http";
+import { asRecord, optionalString, requireArray, requireParam } from "../utils/validation";
+
+const allowedScopes: ApiKeyScope[] = ["send_message", "manage_session", "read_status", "manage_template"];
+
+export class ApiKeyController {
+  public constructor(private readonly databaseService: DatabaseService) {}
+
+  public list = async (ctx: RequestContext): Promise<Response> => {
+    const keys = this.databaseService.apiKeys.listByUserId(ctx.userId!).map((key) => ({
+      ...key,
+      keyHash: undefined
+    }));
+    return json({ items: keys });
+  };
+
+  public generate = async (ctx: RequestContext): Promise<Response> => {
+    const body = asRecord(ctx.body);
+    const scopes = requireArray(body.scopes ?? [], "scopes").map((scope) => String(scope));
+    for (const scope of scopes) {
+      if (!allowedScopes.includes(scope as ApiKeyScope)) {
+        throw new AppError(400, "VALIDATION_ERROR", `Unsupported scope: ${scope}`);
+      }
+    }
+
+    const rawKey = `sk_${crypto.randomUUID().replace(/-/g, "")}`;
+    const record = this.databaseService.apiKeys.create({
+      id: crypto.randomUUID(),
+      userId: ctx.userId!,
+      name: optionalString(body.name, "name") ?? "default",
+      keyHash: await sha256(rawKey),
+      keyHint: `${rawKey.slice(0, 5)}...${rawKey.slice(-4)}`,
+      scopes: JSON.stringify(scopes),
+      ipWhitelist: Array.isArray(body.ipWhitelist) ? JSON.stringify(body.ipWhitelist.map((entry) => String(entry))) : null,
+      isActive: 1
+    });
+
+    return json(
+      {
+        apiKey: rawKey,
+        record: {
+          ...record,
+          keyHash: undefined
+        }
+      },
+      201
+    );
+  };
+
+  public revoke = async (ctx: RequestContext): Promise<Response> => {
+    if (!this.databaseService.apiKeys.revoke(requireParam(ctx.params, "id"), ctx.userId!)) {
+      throw new AppError(404, "NOT_FOUND", "API key not found");
+    }
+    return json({ revoked: true });
+  };
+
+  public destroy = async (ctx: RequestContext): Promise<Response> => {
+    if (!this.databaseService.apiKeys.delete(requireParam(ctx.params, "id"), ctx.userId!)) {
+      throw new AppError(404, "NOT_FOUND", "API key not found");
+    }
+    return new Response(null, { status: 204 });
+  };
+}

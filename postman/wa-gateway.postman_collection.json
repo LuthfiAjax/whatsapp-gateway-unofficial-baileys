@@ -1,0 +1,1103 @@
+{
+  "info": {
+    "_postman_id": "8d04af81-86d8-4d4e-b70f-5f145d7773f2",
+    "name": "WA Gateway",
+    "description": "Postman collection for the WA Gateway project. Import this file, set the collection variables, then run the requests as needed.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "accessToken",
+      "value": ""
+    },
+    {
+      "key": "refreshToken",
+      "value": ""
+    },
+    {
+      "key": "apiKey",
+      "value": ""
+    },
+    {
+      "key": "sessionId",
+      "value": ""
+    },
+    {
+      "key": "apiKeyId",
+      "value": ""
+    },
+    {
+      "key": "templateId",
+      "value": ""
+    },
+    {
+      "key": "broadcastId",
+      "value": ""
+    },
+    {
+      "key": "webhookId",
+      "value": ""
+    },
+    {
+      "key": "groupId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"secret123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"secret123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/refresh-token",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "refresh-token"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "me"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/logout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "logout"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "API Keys",
+      "item": [
+        {
+          "name": "List API Keys",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/apikeys",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "apikeys"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Generate API Key",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"backend-prod\",\n  \"scopes\": [\"send_message\", \"manage_session\", \"read_status\", \"manage_template\"],\n  \"ipWhitelist\": [\"127.0.0.1\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/apikeys/generate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "apikeys",
+                "generate"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Revoke API Key",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/apikeys/{{apiKeyId}}/revoke",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "apikeys",
+                "{{apiKeyId}}",
+                "revoke"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete API Key",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/apikeys/{{apiKeyId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "apikeys",
+                "{{apiKeyId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sessions",
+      "item": [
+        {
+          "name": "Create Session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sessionName\": \"sales-1\",\n  \"phoneNumber\": \"628123456789\",\n  \"webhookUrl\": \"https://example.com/wa/webhook\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/sessions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sessions"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Sessions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/sessions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sessions"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Connect Session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"method\": \"qr\",\n  \"phoneNumber\": \"628123456789\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/connect",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{sessionId}}",
+                "connect"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Session Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{sessionId}}",
+                "status"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Session QR",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/qr",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{sessionId}}",
+                "qr"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Session Info",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/info",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{sessionId}}",
+                "info"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Disconnect Session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/disconnect",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{sessionId}}",
+                "disconnect"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Session Webhook",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"webhookUrl\": \"https://example.com/wa/webhook-updated\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/update",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{sessionId}}",
+                "update"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Session",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{sessionId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Messages",
+      "item": [
+        {
+          "name": "Send Text",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to\": \"628123456789\",\n  \"text\": \"hello from gateway\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/messages/text",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{sessionId}}",
+                "messages",
+                "text"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Send Image",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to\": \"628123456789\",\n  \"url\": \"https://example.com/image.jpg\",\n  \"caption\": \"halo\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/messages/image",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{sessionId}}",
+                "messages",
+                "image"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Send Document",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to\": \"628123456789\",\n  \"url\": \"https://example.com/invoice.pdf\",\n  \"fileName\": \"invoice.pdf\",\n  \"mimeType\": \"application/pdf\",\n  \"caption\": \"Invoice\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/messages/document",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{sessionId}}",
+                "messages",
+                "document"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Send Buttons",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to\": \"628123456789\",\n  \"text\": \"Pilih menu\",\n  \"footer\": \"Footer\",\n  \"buttons\": [\n    {\"id\": \"yes\", \"text\": \"Ya\"},\n    {\"id\": \"no\", \"text\": \"Tidak\"}\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/messages/buttons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{sessionId}}",
+                "messages",
+                "buttons"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Send Bulk",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"Halo {{name}}\",\n  \"delayMs\": 1000,\n  \"recipients\": [\n    {\"to\": \"628111111111\", \"variables\": {\"name\": \"John\"}},\n    {\"to\": \"628222222222\", \"variables\": {\"name\": \"Jane\"}}\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/messages/bulk",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{sessionId}}",
+                "messages",
+                "bulk"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Send Template",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to\": \"628123456789\",\n  \"templateId\": \"{{templateId}}\",\n  \"variables\": {\n    \"name\": \"John\",\n    \"invoice\": \"INV-001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/messages/template",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{sessionId}}",
+                "messages",
+                "template"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Templates",
+      "item": [
+        {
+          "name": "List Templates",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/templates",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "templates"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Template",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"invoice-reminder\",\n  \"type\": \"text\",\n  \"content\": \"Halo {{name}}, invoice {{invoice}} sudah jatuh tempo.\",\n  \"variables\": [\"name\", \"invoice\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/templates",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "templates"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Template",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"invoice-reminder-v2\",\n  \"content\": \"Halo {{name}}, invoice {{invoice}} segera dibayar ya.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/templates/{{templateId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "templates",
+                "{{templateId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Template",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/templates/{{templateId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "templates",
+                "{{templateId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Broadcasts",
+      "item": [
+        {
+          "name": "Create Broadcast",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sessionId\": \"{{sessionId}}\",\n  \"name\": \"promo-ramadhan\",\n  \"text\": \"Halo {{name}}, ada promo hari ini.\",\n  \"delayMs\": 1500,\n  \"recipients\": [\n    {\"to\": \"628111111111\", \"variables\": {\"name\": \"Budi\"}},\n    {\"to\": \"628222222222\", \"variables\": {\"name\": \"Sinta\"}}\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/broadcasts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "broadcasts"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Broadcasts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/broadcasts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "broadcasts"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Broadcast Report",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/broadcasts/{{broadcastId}}/report",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "broadcasts",
+                "{{broadcastId}}",
+                "report"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Webhooks",
+      "item": [
+        {
+          "name": "List Webhooks",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/webhooks",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "webhooks"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Webhook",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"https://example.com/webhooks/wa\",\n  \"events\": [\"message.received\", \"message.sent\", \"session.connected\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/webhooks",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "webhooks"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Webhook",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/webhooks/{{webhookId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "webhooks",
+                "{{webhookId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Groups",
+      "item": [
+        {
+          "name": "List Groups",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/groups",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{sessionId}}",
+                "groups"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Group Members",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/groups/{{groupId}}/members",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{sessionId}}",
+                "groups",
+                "{{groupId}}",
+                "members"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
