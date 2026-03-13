@@ -3,6 +3,10 @@ node_modules/
 /node_modules/
 /node_modules
 
+logs/
+/logs/
+/logs
+
 # build output
 dist/
 /dist/

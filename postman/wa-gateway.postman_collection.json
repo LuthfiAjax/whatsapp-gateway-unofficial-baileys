@@ -57,13 +57,11 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/health",
+              "raw": "{{baseUrl}}/",
               "host": [
                 "{{baseUrl}}"
               ],
-              "path": [
-                "health"
-              ]
+              "path": []
             }
           }
         }

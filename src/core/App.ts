@@ -27,6 +27,7 @@ import { AuthService } from "../services/AuthService";
 import { TemplateService } from "../services/TemplateService";
 import { BroadcastService } from "../services/BroadcastService";
 import { WebhookService } from "../services/WebhookService";
+import type { RouteHandler } from "../routes/AppRouter";
 
 interface RateLimitRecord {
   count: number;
@@ -46,7 +47,7 @@ export class App {
   private readonly webhookService = new WebhookService(this.databaseService);
   private readonly groupService = new GroupService(this.sessionManager);
   private readonly authService = new AuthService(this.databaseService);
-  private readonly router = new AppRouter();
+  private readonly router = new AppRouter((request, handler, params, path) => this.executeRoute(request, handler, params, path));
   private readonly rateLimit = new Map<string, RateLimitRecord>();
 
   public async bootstrap(): Promise<void> {
@@ -92,7 +93,7 @@ export class App {
       }
     });
 
-    logger.info({ port: config.port }, "WhatsApp gateway listening");
+    process.stdout.write(`Server running on http://localhost:${config.port}\n`);
   }
 
   public async shutdown(): Promise<void> {
@@ -100,10 +101,7 @@ export class App {
   }
 
   private async handleRequest(request: Request, server: Bun.Server<ClientSocketData>): Promise<Response> {
-    const requestId = crypto.randomUUID();
-    const ipAddress = request.headers.get("cf-connecting-ip") ?? request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? null;
     const url = new URL(request.url);
-    let ctx: RequestContext | undefined;
 
     try {
       if (url.pathname === WS_PATH) {
@@ -114,43 +112,49 @@ export class App {
         throw new AppError(400, "WS_UPGRADE_FAILED", "WebSocket upgrade failed");
       }
 
-      if (url.pathname === "/health") {
-        return new Response(JSON.stringify({ ok: true }), { headers: { "content-type": "application/json" } });
-      }
-
-      const { handler, params } = this.router.match(request.method, url.pathname);
-      const body = ["POST", "PATCH", "PUT", "DELETE"].includes(request.method.toUpperCase()) ? await readJsonBody(request) : {};
-
-      ctx = {
-        request,
-        params,
-        body,
-        requestId,
-        ipAddress
-      };
-
-      this.enforceRateLimit(this.buildRateLimitKey(request, ipAddress));
-      const response = await handler(ctx);
-      this.logRequest(ctx, url.pathname, response.status, "request.success", "Request completed");
-      return response;
+      return await this.router.fetch(request);
     } catch (error) {
       const response = errorResponse(error);
-      this.logRequest(
-        ctx ?? {
-          request,
-          params: {},
-          body: {},
-          requestId,
-          ipAddress
-        },
-        url.pathname,
-        response.status,
-        response.status === 401 ? "auth.failed" : "request.failed",
-        error instanceof Error ? error.message : "Request failed"
-      );
+      const requestId = crypto.randomUUID();
+      this.logRequest({
+        request,
+        params: {},
+        body: {},
+        requestId,
+        ipAddress: this.getClientIp(request)
+      }, url.pathname, response.status, response.status === 401 ? "auth.failed" : "request.failed", error instanceof Error ? error.message : "Request failed");
       logger.error({ error, requestId, path: url.pathname }, "Request failed");
       return response;
     }
+  }
+
+  private async executeRoute(request: Request, handler: RouteHandler, params: Record<string, string>, path: string): Promise<Response> {
+    const requestId = crypto.randomUUID();
+    const ipAddress = this.getClientIp(request);
+    const body = ["POST", "PATCH", "PUT", "DELETE"].includes(request.method.toUpperCase()) ? await readJsonBody(request) : {};
+    const ctx: RequestContext = {
+      request,
+      params,
+      body,
+      requestId,
+      ipAddress
+    };
+
+    try {
+      this.enforceRateLimit(this.buildRateLimitKey(request, ipAddress));
+      const response = await handler(ctx);
+      this.logRequest(ctx, path, response.status, "request.success", "Request completed");
+      return response;
+    } catch (error) {
+      const response = errorResponse(error);
+      this.logRequest(ctx, path, response.status, response.status === 401 ? "auth.failed" : "request.failed", error instanceof Error ? error.message : "Request failed");
+      logger.error({ error, requestId, path }, "Request failed");
+      return response;
+    }
+  }
+
+  private getClientIp(request: Request): string | null {
+    return request.headers.get("cf-connecting-ip") ?? request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? null;
   }
 
   private buildRateLimitKey(request: Request, ipAddress: string | null): string {

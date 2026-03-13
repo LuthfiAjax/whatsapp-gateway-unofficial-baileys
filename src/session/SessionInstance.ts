@@ -77,6 +77,7 @@ export class SessionInstance {
     this.socket = makeWASocket({
       version,
       auth: this.authState.state,
+      logger: logger.child({ class: "baileys" }),
       browser: Browsers.macOS("Desktop"),
       syncFullHistory: true,
       markOnlineOnConnect: false,

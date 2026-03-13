@@ -1,6 +1,7 @@
 import { Database } from "bun:sqlite";
 import { mkdirSync, readFileSync } from "node:fs";
 import { dirname, isAbsolute, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import schemaAssetPath from "./schema.sql";
 import { UserRepository } from "./repositories/UserRepository";
 import { ApiKeyRepository } from "./repositories/ApiKeyRepository";
@@ -12,7 +13,14 @@ import { RefreshTokenRepository } from "./repositories/RefreshTokenRepository";
 import { MessageRepository } from "./repositories/MessageRepository";
 import { LogRepository } from "./repositories/LogRepository";
 
-const schemaSql = readFileSync(schemaAssetPath, "utf8");
+function resolveSchemaPath(assetPath: string): string {
+  if (isAbsolute(assetPath)) {
+    return assetPath;
+  }
+  return resolve(dirname(fileURLToPath(import.meta.url)), assetPath);
+}
+
+const schemaSql = readFileSync(resolveSchemaPath(schemaAssetPath), "utf8");
 
 export class DatabaseService {
   private readonly db: Database;
