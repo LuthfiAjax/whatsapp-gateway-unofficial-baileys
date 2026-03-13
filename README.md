@@ -3,6 +3,7 @@
 Production-ready multi-user WhatsApp Gateway berbasis Bun, TypeScript, Baileys, dan SQLite.
 
 Project ini mendukung:
+
 - JWT authentication untuk dashboard / human access
 - API key authentication untuk machine-to-machine access
 - isolasi multi-user per session
@@ -16,6 +17,7 @@ Project ini mendukung:
 ## Arsitektur
 
 Komponen utama:
+
 - `Bun + TypeScript` untuk HTTP server dan runtime
 - `Baileys` untuk koneksi WhatsApp multi-device
 - `SQLite` untuk persistence user, session, message, template, broadcast, webhook, dan log
@@ -23,6 +25,7 @@ Komponen utama:
 - `In-memory queue` untuk antrean kirim pesan dan retry
 
 Catatan:
+
 - queue saat ini masih in-memory, belum Redis
 - endpoint existing tetap dipertahankan dan tidak dihapus
 
@@ -45,6 +48,7 @@ Catatan:
 ## Database
 
 Minimal table yang dipakai:
+
 - `users`
 - `refresh_tokens`
 - `api_keys`
@@ -67,7 +71,7 @@ bun install
 
 ## Environment
 
-Contoh environment yang dipakai aplikasi:
+Contoh environment .env yang dipakai aplikasi:
 
 ```env
 APP_HOST=0.0.0.0
@@ -128,6 +132,7 @@ Authorization: Bearer <access_token>
 ```
 
 Flow:
+
 1. `POST /api/v1/auth/register`
 2. `POST /api/v1/auth/login`
 3. gunakan `accessToken` untuk request dashboard
@@ -144,6 +149,7 @@ x-api-key: <api_key>
 ```
 
 Scopes yang tersedia:
+
 - `send_message`
 - `manage_session`
 - `read_status`
@@ -239,6 +245,7 @@ curl -X POST http://localhost:3000/api/v1/auth/refresh-token \
 ### Sessions
 
 Existing endpoint yang tetap dipertahankan:
+
 - `GET /api/v1/sessions`
 - `POST /api/v1/sessions`
 - `POST /api/v1/sessions/{id}/connect`
@@ -246,6 +253,7 @@ Existing endpoint yang tetap dipertahankan:
 - `POST /api/v1/sessions/{id}/messages/text`
 
 Endpoint session tambahan:
+
 - `GET /api/v1/sessions/{id}`
 - `POST /api/v1/sessions/{id}/disconnect`
 - `DELETE /api/v1/sessions/{id}`
@@ -272,6 +280,7 @@ curl http://localhost:3000/api/v1/sessions/<session-id>/info \
 ### Messaging
 
 Endpoints:
+
 - `POST /api/v1/sessions/{id}/messages/text`
 - `POST /api/v1/sessions/{id}/messages/media`
 - `POST /api/v1/sessions/{id}/messages/image`
@@ -383,6 +392,7 @@ curl -X POST http://localhost:3000/api/v1/sessions/<session-id>/messages/bulk \
 ```
 
 Behavior:
+
 - nomor akan diformat otomatis ke format internasional
 - message masuk ke queue dulu
 - retry maksimal 3x jika gagal
@@ -390,6 +400,7 @@ Behavior:
 ### Templates
 
 Endpoints:
+
 - `GET /api/v1/templates`
 - `POST /api/v1/templates`
 - `PUT /api/v1/templates/{id}`
@@ -428,11 +439,13 @@ curl -X POST http://localhost:3000/api/v1/sessions/<session-id>/messages/templat
 ### Broadcasts
 
 Endpoints:
+
 - `POST /api/v1/broadcasts`
 - `GET /api/v1/broadcasts`
 - `GET /api/v1/broadcasts/{id}/report`
 
 Broadcast mendukung:
+
 - recipients array
 - upload CSV
 - custom text
@@ -465,6 +478,7 @@ curl http://localhost:3000/api/v1/broadcasts/<broadcast-id>/report \
 ```
 
 Response report berisi:
+
 - `total`
 - `sent`
 - `failed`
@@ -473,11 +487,13 @@ Response report berisi:
 ### Webhooks
 
 Endpoints:
+
 - `POST /api/v1/webhooks`
 - `GET /api/v1/webhooks`
 - `DELETE /api/v1/webhooks/{id}`
 
 Supported events:
+
 - `message.received`
 - `message.sent`
 - `message.delivered`
@@ -514,6 +530,7 @@ Webhook payload:
 ```
 
 Behavior:
+
 - retry maksimal 3x
 - delivery status dicatat ke database
 
@@ -536,10 +553,12 @@ Contoh:
 const ws = new WebSocket("ws://localhost:3000/ws");
 
 ws.onopen = () => {
-  ws.send(JSON.stringify({
-    type: "subscribe",
-    sessionId: "<session-id>"
-  }));
+  ws.send(
+    JSON.stringify({
+      type: "subscribe",
+      sessionId: "<session-id>",
+    }),
+  );
 };
 
 ws.onmessage = (event) => {
@@ -550,17 +569,20 @@ ws.onmessage = (event) => {
 ## Status dan Ownership
 
 Rules:
+
 - user hanya bisa akses session miliknya sendiri
 - template, broadcast, webhook, dan API key terikat ke `user_id`
 - API key hanya bisa mengakses resource milik owner key tersebut
 
 Session status:
+
 - `connected`
 - `connecting`
 - `disconnected`
 - `banned`
 
 Message status:
+
 - `queued`
 - `sent`
 - `delivered`
@@ -570,6 +592,7 @@ Message status:
 ## Notes Compatibility
 
 Endpoint lama berikut tetap ada:
+
 - `GET /api/v1/sessions`
 - `POST /api/v1/sessions`
 - `POST /api/v1/sessions/{session_id}/connect`
@@ -597,3 +620,25 @@ Perubahan saat ini sudah lolos:
 bunx tsc --noEmit
 bun run build
 ```
+
+---
+
+## ☕ Dukung Project Ini
+
+Jika project WhatsApp Gateway ini bermanfaat untuk Anda,  
+Anda bisa mendukung pengembang dengan mentraktir kopi 🙌
+
+Dukungan Anda sangat berarti untuk pengembangan dan maintenance project ini.
+
+### 💳 Donasi via QRIS
+
+Silakan scan QRIS berikut:
+
+![QRIS Donasi](./img/qris.png)
+
+<p align="center">
+  <strong>Ach Luthfi Imron Juhari</strong><br/>
+  Terima kasih atas dukungannya ❤️
+</p>
+
+---
