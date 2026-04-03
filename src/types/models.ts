@@ -16,11 +16,22 @@ export interface RefreshTokenRecord {
   updatedAt: string;
 }
 
+export interface AccessTokenRecord {
+  id: string;
+  userId: string;
+  tokenHash: string;
+  expiresAt: string;
+  revokedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface ApiKeyRecord {
   id: string;
   userId: string;
   name: string;
   keyHash: string;
+  keyValue: string | null;
   keyHint: string;
   scopes: string;
   ipWhitelist: string | null;

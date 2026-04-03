@@ -57,12 +57,19 @@ export class AuthService {
     return this.issueTokens(record.userId);
   }
 
-  public async logout(refreshToken: string | undefined, userId: string): Promise<void> {
+  public async logout(accessToken: string | undefined, refreshToken: string | undefined, userId: string): Promise<void> {
+    if (accessToken) {
+      const accessTokenHash = await sha256(accessToken);
+      this.databaseService.accessTokens.revokeByHash(accessTokenHash);
+    }
+
     if (refreshToken) {
       const tokenHash = await sha256(refreshToken);
       this.databaseService.refreshTokens.revokeByHash(tokenHash);
       return;
     }
+
+    this.databaseService.accessTokens.revokeAllByUserId(userId);
     this.databaseService.refreshTokens.revokeAllByUserId(userId);
   }
 
@@ -70,6 +77,13 @@ export class AuthService {
     const accessToken = jwt.sign({ sub: userId, type: "access" }, config.jwtSecret, { expiresIn: config.jwtExpiresIn as any });
     const refreshToken = jwt.sign({ sub: userId, type: "refresh" }, config.jwtSecret, { expiresIn: config.jwtRefreshExpiresIn as any });
     const expiresAt = new Date(Date.now() + parseExpiry(config.jwtRefreshExpiresIn)).toISOString();
+    const accessExpiresAt = new Date(Date.now() + parseExpiry(config.jwtExpiresIn)).toISOString();
+    this.databaseService.accessTokens.create({
+      id: crypto.randomUUID(),
+      userId,
+      tokenHash: await sha256(accessToken),
+      expiresAt: accessExpiresAt
+    });
     this.databaseService.refreshTokens.create({
       id: crypto.randomUUID(),
       userId,

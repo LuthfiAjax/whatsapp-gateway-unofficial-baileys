@@ -33,6 +33,12 @@ async function authenticateJwt(databaseService: DatabaseService, ctx: RequestCon
       throw new AppError(401, "UNAUTHORIZED", "Invalid token type");
     }
 
+    const tokenHash = await sha256(token);
+    const tokenRecord = databaseService.accessTokens.findByHash(tokenHash);
+    if (!tokenRecord || tokenRecord.revokedAt || Date.parse(tokenRecord.expiresAt) <= Date.now()) {
+      throw new AppError(401, "UNAUTHORIZED", "Invalid or expired token");
+    }
+
     const user = databaseService.users.findById(decoded.sub);
     if (!user) {
       throw new AppError(401, "UNAUTHORIZED", "User not found");

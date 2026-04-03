@@ -39,6 +39,8 @@ export function registerRoutes(
 
   router.register("GET", `${API_PREFIX}/apikeys`, humanOnly(controllers.apiKeyController.list));
   router.register("POST", `${API_PREFIX}/apikeys/generate`, humanOnly(controllers.apiKeyController.generate));
+  router.register("GET", `${API_PREFIX}/apikey/view/:id`, humanOnly(controllers.apiKeyController.view));
+  router.register("POST", `${API_PREFIX}/apikeys/generate/:id`, humanOnly(controllers.apiKeyController.regenerate));
   router.register("PATCH", `${API_PREFIX}/apikeys/:id/revoke`, humanOnly(controllers.apiKeyController.revoke));
   router.register("DELETE", `${API_PREFIX}/apikeys/:id`, humanOnly(controllers.apiKeyController.destroy));
 

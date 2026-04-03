@@ -4,6 +4,14 @@ import { json } from "../utils/http";
 import { asRecord, requireString } from "../utils/validation";
 import { AuthService } from "../services/AuthService";
 
+function getBearerToken(request: Request): string | undefined {
+  const authHeader = request.headers.get("authorization");
+  if (!authHeader?.startsWith("Bearer ")) {
+    return undefined;
+  }
+  return authHeader.slice(7).trim() || undefined;
+}
+
 export class AuthController {
   public constructor(private readonly authService: AuthService) {}
 
@@ -19,7 +27,7 @@ export class AuthController {
 
   public logout = async (ctx: RequestContext): Promise<Response> => {
     const body = asRecord(ctx.body);
-    await this.authService.logout(typeof body.refreshToken === "string" ? body.refreshToken : undefined, ctx.userId!);
+    await this.authService.logout(getBearerToken(ctx.request), typeof body.refreshToken === "string" ? body.refreshToken : undefined, ctx.userId!);
     return json({ loggedOut: true });
   };
 

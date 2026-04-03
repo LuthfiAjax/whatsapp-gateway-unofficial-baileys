@@ -7,6 +7,7 @@ const selectClause = `
     user_id as userId,
     name,
     key_hash as keyHash,
+    key_value as keyValue,
     key_hint as keyHint,
     scopes,
     ip_whitelist as ipWhitelist,
@@ -26,14 +27,15 @@ export class ApiKeyRepository {
     const now = new Date().toISOString();
     this.db
       .query(
-        `INSERT INTO api_keys (id, user_id, name, key_hash, key_hint, scopes, ip_whitelist, usage_count, last_used_at, is_active, revoked_at, created_at, updated_at)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+        `INSERT INTO api_keys (id, user_id, name, key_hash, key_value, key_hint, scopes, ip_whitelist, usage_count, last_used_at, is_active, revoked_at, created_at, updated_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
       )
       .run(
         input.id,
         input.userId,
         input.name,
         input.keyHash,
+        input.keyValue ?? null,
         input.keyHint,
         input.scopes,
         input.ipWhitelist ?? null,
@@ -78,5 +80,19 @@ export class ApiKeyRepository {
   public delete(id: string, userId: string): boolean {
     const result = this.db.query("DELETE FROM api_keys WHERE id = ? AND user_id = ?").run(id, userId);
     return Number(result.changes) > 0;
+  }
+
+  public replaceKey(id: string, userId: string, input: Pick<ApiKeyRecord, "keyHash" | "keyValue" | "keyHint">): ApiKeyRecord | null {
+    const now = new Date().toISOString();
+    const update = this.db.transaction(() => {
+      const result = this.db
+        .query("UPDATE api_keys SET key_hash = ?, key_value = ?, key_hint = ?, is_active = 1, revoked_at = NULL, updated_at = ? WHERE id = ? AND user_id = ?")
+        .run(input.keyHash, input.keyValue ?? null, input.keyHint, now, id, userId);
+      if (Number(result.changes) === 0) {
+        return null;
+      }
+      return this.findById(id, userId);
+    });
+    return update() ?? null;
   }
 }

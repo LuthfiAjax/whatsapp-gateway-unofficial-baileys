@@ -12,6 +12,7 @@ import { MessageLogRepository, WebhookDeliveryRepository, WebhookRepository } fr
 import { RefreshTokenRepository } from "./repositories/RefreshTokenRepository";
 import { MessageRepository } from "./repositories/MessageRepository";
 import { LogRepository } from "./repositories/LogRepository";
+import { AccessTokenRepository } from "./repositories/AccessTokenRepository";
 
 function resolveSchemaPath(assetPath: string): string {
   if (isAbsolute(assetPath)) {
@@ -27,6 +28,7 @@ export class DatabaseService {
 
   public readonly users: UserRepository;
   public readonly refreshTokens: RefreshTokenRepository;
+  public readonly accessTokens: AccessTokenRepository;
   public readonly apiKeys: ApiKeyRepository;
   public readonly sessions: SessionRepository;
   public readonly messages: MessageRepository;
@@ -46,6 +48,7 @@ export class DatabaseService {
 
     this.users = new UserRepository(this.db);
     this.refreshTokens = new RefreshTokenRepository(this.db);
+    this.accessTokens = new AccessTokenRepository(this.db);
     this.apiKeys = new ApiKeyRepository(this.db);
     this.sessions = new SessionRepository(this.db);
     this.messages = new MessageRepository(this.db);
@@ -77,6 +80,7 @@ export class DatabaseService {
 
   public migrate(): void {
     this.db.exec(schemaSql);
+    this.ensureColumn("api_keys", "key_value", "TEXT NULL");
     this.ensureColumn("api_keys", "name", "TEXT NOT NULL DEFAULT 'default'");
     this.ensureColumn("api_keys", "ip_whitelist", "TEXT NULL");
     this.ensureColumn("api_keys", "usage_count", "INTEGER NOT NULL DEFAULT 0");
