@@ -57,9 +57,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/",
+              "raw": "{{base_url_wa}}/",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": []
             }
@@ -85,9 +85,9 @@
               "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"secret123\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/auth/register",
+              "raw": "{{base_url_wa}}/api/v1/auth/register",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -113,9 +113,9 @@
               "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"secret123\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/auth/login",
+              "raw": "{{base_url_wa}}/api/v1/auth/login",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -141,9 +141,9 @@
               "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/auth/refresh-token",
+              "raw": "{{base_url_wa}}/api/v1/auth/refresh-token",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -165,9 +165,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/auth/me",
+              "raw": "{{base_url_wa}}/api/v1/auth/me",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -197,9 +197,9 @@
               "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/auth/logout",
+              "raw": "{{base_url_wa}}/api/v1/auth/logout",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -226,9 +226,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/apikeys",
+              "raw": "{{base_url_wa}}/api/v1/apikeys",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -257,9 +257,9 @@
               "raw": "{\n  \"name\": \"backend-prod\",\n  \"scopes\": [\"send_message\", \"manage_session\", \"read_status\", \"manage_template\"],\n  \"ipWhitelist\": [\"127.0.0.1\"]\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/apikeys/generate",
+              "raw": "{{base_url_wa}}/api/v1/apikeys/generate",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -281,9 +281,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/apikeys/{{apiKeyId}}/revoke",
+              "raw": "{{base_url_wa}}/api/v1/apikeys/{{apiKeyId}}/revoke",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -306,9 +306,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/apikeys/{{apiKeyId}}",
+              "raw": "{{base_url_wa}}/api/v1/apikeys/{{apiKeyId}}",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -343,9 +343,9 @@
               "raw": "{\n  \"sessionName\": \"sales-1\",\n  \"phoneNumber\": \"628123456789\",\n  \"webhookUrl\": \"https://example.com/wa/webhook\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions",
+              "raw": "{{base_url_wa}}/api/v1/sessions",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -366,9 +366,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions",
+              "raw": "{{base_url_wa}}/api/v1/sessions",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -397,9 +397,9 @@
               "raw": "{\n  \"method\": \"qr\",\n  \"phoneNumber\": \"628123456789\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/connect",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/connect",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -422,9 +422,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/status",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/status",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -447,9 +447,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -471,9 +471,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/qr",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/qr",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -496,9 +496,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/info",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/info",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -521,9 +521,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/disconnect",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/disconnect",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -554,9 +554,9 @@
               "raw": "{\n  \"webhookUrl\": \"https://example.com/wa/webhook-updated\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/update",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/update",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -587,9 +587,9 @@
               "raw": "{\n  \"webhookUrl\": \"https://example.com/wa/webhook-updated\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/webhook",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/webhook",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -620,9 +620,9 @@
               "raw": "{\n  \"webhookUrl\": \"https://example.com/wa/webhook-updated\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -652,9 +652,9 @@
               "raw": "{\n  \"phoneNumber\": \"628123456789\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/phone",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/phone",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -677,9 +677,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -714,9 +714,9 @@
               "raw": "{\n  \"to\": \"628123456789\",\n  \"text\": \"hello from gateway\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/messages/text",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/messages/text",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -748,9 +748,9 @@
               "raw": "{\n  \"to\": \"628123456789\",\n  \"mediaType\": \"image\",\n  \"url\": \"https://example.com/image.jpg\",\n  \"caption\": \"halo\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/messages/media",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/messages/media",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -782,9 +782,9 @@
               "raw": "{\n  \"to\": \"628123456789\",\n  \"url\": \"https://example.com/image.jpg\",\n  \"caption\": \"halo\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/messages/image",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/messages/image",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -816,9 +816,9 @@
               "raw": "{\n  \"to\": \"628123456789\",\n  \"url\": \"https://example.com/video.mp4\",\n  \"caption\": \"video sample\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/messages/video",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/messages/video",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -850,9 +850,9 @@
               "raw": "{\n  \"to\": \"628123456789\",\n  \"url\": \"https://example.com/audio.ogg\",\n  \"mimeType\": \"audio/ogg\",\n  \"ptt\": false\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/messages/audio",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/messages/audio",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -884,9 +884,9 @@
               "raw": "{\n  \"to\": \"628123456789\",\n  \"url\": \"https://example.com/invoice.pdf\",\n  \"fileName\": \"invoice.pdf\",\n  \"mimeType\": \"application/pdf\",\n  \"caption\": \"Invoice\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/messages/document",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/messages/document",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -918,9 +918,9 @@
               "raw": "{\n  \"to\": \"628123456789\",\n  \"text\": \"Pilih menu\",\n  \"footer\": \"Footer\",\n  \"buttons\": [\n    {\"id\": \"yes\", \"text\": \"Ya\"},\n    {\"id\": \"no\", \"text\": \"Tidak\"}\n  ]\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/messages/buttons",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/messages/buttons",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -952,9 +952,9 @@
               "raw": "{\n  \"to\": \"628123456789\",\n  \"latitude\": -6.2,\n  \"longitude\": 106.8,\n  \"name\": \"Jakarta\",\n  \"address\": \"Indonesia\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/messages/location",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/messages/location",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -986,9 +986,9 @@
               "raw": "{\n  \"to\": \"628123456789\",\n  \"contacts\": [\n    {\n      \"displayName\": \"John Doe\",\n      \"vcard\": \"BEGIN:VCARD\\nVERSION:3.0\\nFN:John Doe\\nTEL;type=CELL;type=VOICE;waid=628123456789:+62 812-3456-789\\nEND:VCARD\"\n    }\n  ]\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/messages/contact",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/messages/contact",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -1020,9 +1020,9 @@
               "raw": "{\n  \"to\": \"628123456789\",\n  \"text\": \"Daftar produk\",\n  \"buttonText\": \"Buka\",\n  \"sections\": [\n    {\n      \"title\": \"Paket\",\n      \"rows\": [\n        {\"id\": \"basic\", \"title\": \"Basic\", \"description\": \"Paket basic\"}\n      ]\n    }\n  ]\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/messages/list",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/messages/list",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -1054,9 +1054,9 @@
               "raw": "{\n  \"text\": \"Halo {{name}}\",\n  \"delayMs\": 1000,\n  \"recipients\": [\n    {\"to\": \"628111111111\", \"variables\": {\"name\": \"John\"}},\n    {\"to\": \"628222222222\", \"variables\": {\"name\": \"Jane\"}}\n  ]\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/messages/bulk",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/messages/bulk",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -1088,9 +1088,9 @@
               "raw": "{\n  \"to\": \"628123456789\",\n  \"templateId\": \"{{templateId}}\",\n  \"variables\": {\n    \"name\": \"John\",\n    \"invoice\": \"INV-001\"\n  }\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/messages/template",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/messages/template",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -1119,9 +1119,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/templates",
+              "raw": "{{base_url_wa}}/api/v1/templates",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -1150,9 +1150,9 @@
               "raw": "{\n  \"name\": \"invoice-reminder\",\n  \"type\": \"text\",\n  \"content\": \"Halo {{name}}, invoice {{invoice}} sudah jatuh tempo.\",\n  \"variables\": [\"name\", \"invoice\"]\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/templates",
+              "raw": "{{base_url_wa}}/api/v1/templates",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -1181,9 +1181,9 @@
               "raw": "{\n  \"name\": \"invoice-reminder-v2\",\n  \"content\": \"Halo {{name}}, invoice {{invoice}} segera dibayar ya.\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/templates/{{templateId}}",
+              "raw": "{{base_url_wa}}/api/v1/templates/{{templateId}}",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -1205,9 +1205,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/templates/{{templateId}}",
+              "raw": "{{base_url_wa}}/api/v1/templates/{{templateId}}",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -1242,9 +1242,9 @@
               "raw": "{\n  \"sessionId\": \"{{sessionId}}\",\n  \"name\": \"promo-ramadhan\",\n  \"text\": \"Halo {{name}}, ada promo hari ini.\",\n  \"delayMs\": 1500,\n  \"recipients\": [\n    {\"to\": \"628111111111\", \"variables\": {\"name\": \"Budi\"}},\n    {\"to\": \"628222222222\", \"variables\": {\"name\": \"Sinta\"}}\n  ]\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/broadcasts",
+              "raw": "{{base_url_wa}}/api/v1/broadcasts",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -1265,9 +1265,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/broadcasts",
+              "raw": "{{base_url_wa}}/api/v1/broadcasts",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -1288,9 +1288,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/broadcasts/{{broadcastId}}/report",
+              "raw": "{{base_url_wa}}/api/v1/broadcasts/{{broadcastId}}/report",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -1318,9 +1318,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/webhooks",
+              "raw": "{{base_url_wa}}/api/v1/webhooks",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -1349,9 +1349,9 @@
               "raw": "{\n  \"url\": \"https://example.com/webhooks/wa\",\n  \"events\": [\"message.received\", \"message.sent\", \"session.connected\"]\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/v1/webhooks",
+              "raw": "{{base_url_wa}}/api/v1/webhooks",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -1372,9 +1372,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/webhooks/{{webhookId}}",
+              "raw": "{{base_url_wa}}/api/v1/webhooks/{{webhookId}}",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -1401,9 +1401,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/groups",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/groups",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",
@@ -1426,9 +1426,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/groups/{{groupId}}/members",
+              "raw": "{{base_url_wa}}/api/v1/sessions/{{sessionId}}/groups/{{groupId}}/members",
               "host": [
-                "{{baseUrl}}"
+                "{{base_url_wa}}"
               ],
               "path": [
                 "api",

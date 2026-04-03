@@ -50,10 +50,7 @@ export class ApiKeyController {
   };
 
   public view = async (ctx: RequestContext): Promise<Response> => {
-    const record = this.databaseService.apiKeys.findById(requireParam(ctx.params, "id"), ctx.userId!);
-    if (!record) {
-      throw new AppError(404, "NOT_FOUND", "API key not found");
-    }
+    const record = this.requireOwnedKey(requireParam(ctx.params, "id"), ctx.userId!);
     if (!record.keyValue) {
       throw new AppError(404, "NOT_FOUND", "API key value is not available");
     }
@@ -65,9 +62,7 @@ export class ApiKeyController {
 
   public regenerate = async (ctx: RequestContext): Promise<Response> => {
     const id = requireParam(ctx.params, "id");
-    if (!this.databaseService.apiKeys.findById(id, ctx.userId!)) {
-      throw new AppError(404, "NOT_FOUND", "API key not found");
-    }
+    this.requireOwnedKey(id, ctx.userId!);
 
     const rawKey = `sk_${crypto.randomUUID().replace(/-/g, "")}`;
     const record = this.databaseService.apiKeys.replaceKey(id, ctx.userId!, {
@@ -87,6 +82,7 @@ export class ApiKeyController {
   };
 
   public revoke = async (ctx: RequestContext): Promise<Response> => {
+    this.requireOwnedKey(requireParam(ctx.params, "id"), ctx.userId!);
     if (!this.databaseService.apiKeys.revoke(requireParam(ctx.params, "id"), ctx.userId!)) {
       throw new AppError(404, "NOT_FOUND", "API key not found");
     }
@@ -94,7 +90,7 @@ export class ApiKeyController {
   };
 
   public destroy = async (ctx: RequestContext): Promise<Response> => {
-    if (!this.databaseService.apiKeys.delete(requireParam(ctx.params, "id"), ctx.userId!)) {
+    if (!this.databaseService.apiKeys.delete(this.requireOwnedKey(requireParam(ctx.params, "id"), ctx.userId!).id, ctx.userId!)) {
       throw new AppError(404, "NOT_FOUND", "API key not found");
     }
     return new Response(null, { status: 204 });
@@ -108,5 +104,16 @@ export class ApiKeyController {
       }
     }
     return scopes;
+  }
+
+  private requireOwnedKey(id: string, userId: string) {
+    const record = this.databaseService.apiKeys.findByIdAnyUser(id);
+    if (!record) {
+      throw new AppError(404, "NOT_FOUND", "API key not found");
+    }
+    if (record.userId !== userId) {
+      throw new AppError(403, "FORBIDDEN", "You are not allowed to access this API key");
+    }
+    return record;
   }
 }

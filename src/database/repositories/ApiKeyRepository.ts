@@ -54,6 +54,10 @@ export class ApiKeyRepository {
     return this.db.query(`${selectClause} WHERE id = ? AND user_id = ?`).get(id, userId) as ApiKeyRecord | null;
   }
 
+  public findByIdAnyUser(id: string): ApiKeyRecord | null {
+    return this.db.query(`${selectClause} WHERE id = ?`).get(id) as ApiKeyRecord | null;
+  }
+
   public findByHash(keyHash: string): ApiKeyRecord | null {
     return this.db.query(`${selectClause} WHERE key_hash = ?`).get(keyHash) as ApiKeyRecord | null;
   }
