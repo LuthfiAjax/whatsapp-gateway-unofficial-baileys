@@ -35,9 +35,9 @@ function readString(name: string, fallback: string): string {
 
 export const config: AppConfig = {
   appHost: readString("APP_HOST", "0.0.0.0"),
-  appBaseUrl: readString("APP_BASE_URL", "http://localhost:3000"),
+  appBaseUrl: readString("APP_BASE_URL", "http://localhost:3010"),
   nodeEnv: readString("NODE_ENV", "development"),
-  port: readNumber("PORT", 3000),
+  port: readNumber("PORT", 3010),
   sqlitePath: readString("SQLITE_PATH", "./data/app.db"),
   webhookRetryCount: readNumber("WEBHOOK_RETRY_COUNT", 3),
   webhookTimeoutMs: readNumber("WEBHOOK_TIMEOUT_MS", 5000),

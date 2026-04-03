@@ -1,4 +1,6 @@
 import { SessionManager } from "../session/SessionManager";
+import { AppError } from "../utils/errors";
+import { buildGroupSendMessageRequest } from "./group-message-helpers";
 
 export class GroupService {
   public constructor(private readonly sessionManager: SessionManager) {}
@@ -32,5 +34,32 @@ export class GroupService {
         admin: participant.admin ?? null
       }))
     };
+  }
+
+  public async sendMessage(userId: string, sessionId: string, body: unknown): Promise<unknown> {
+    const socket = this.sessionManager.getInstance(sessionId, userId).requireSocket();
+    const payload = buildGroupSendMessageRequest(body);
+
+    try {
+      const providerResult = await socket.sendMessage(payload.groupJid, payload.content as any);
+      return {
+        message: {
+          groupJid: payload.groupJid,
+          type: payload.type,
+          text: payload.message,
+          imageUrl: payload.imageUrl
+        },
+        provider: providerResult?.key?.id ? { id: providerResult.key.id } : null
+      };
+    } catch (error) {
+      if (error instanceof AppError) {
+        throw error;
+      }
+      throw new AppError(
+        500,
+        "GROUP_MESSAGE_SEND_FAILED",
+        error instanceof Error ? error.message : "Failed to send group message"
+      );
+    }
   }
 }

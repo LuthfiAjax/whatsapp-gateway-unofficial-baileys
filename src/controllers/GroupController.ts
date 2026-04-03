@@ -13,4 +13,8 @@ export class GroupController {
   public listMembers = async (ctx: RequestContext): Promise<Response> => {
     return json(await this.groupService.listMembers(ctx.userId!, requireParam(ctx.params, "id"), requireParam(ctx.params, "groupId")));
   };
+
+  public sendMessage = async (ctx: RequestContext): Promise<Response> => {
+    return json(await this.groupService.sendMessage(ctx.userId!, requireParam(ctx.params, "id"), ctx.body));
+  };
 }

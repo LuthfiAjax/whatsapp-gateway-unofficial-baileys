@@ -84,4 +84,5 @@ export function registerRoutes(
 
   router.register("GET", `${API_PREFIX}/sessions/:id/groups`, sessionRead(controllers.groupController.list));
   router.register("GET", `${API_PREFIX}/sessions/:id/groups/:groupId/members`, sessionRead(controllers.groupController.listMembers));
+  router.register("POST", `${API_PREFIX}/sessions/:id/groups/messages`, messageSend(controllers.groupController.sendMessage));
 }

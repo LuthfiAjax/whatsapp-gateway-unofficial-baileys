@@ -7,6 +7,10 @@ logs/
 /logs/
 /logs
 
+img/
+/img/
+/img
+
 # build output
 dist/
 /dist/

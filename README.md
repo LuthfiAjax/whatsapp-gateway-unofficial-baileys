@@ -75,8 +75,8 @@ Contoh environment .env yang dipakai aplikasi:
 
 ```env
 APP_HOST=0.0.0.0
-APP_BASE_URL=http://localhost:3000
-PORT=3000
+APP_BASE_URL=http://localhost:3010
+PORT=3010
 NODE_ENV=development
 
 SQLITE_PATH=./data/app.db
@@ -162,7 +162,7 @@ Semua endpoint selain `/api/v1/auth/*` membutuhkan JWT atau API key.
 ### Register user
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/auth/register \
+curl -X POST http://localhost:3010/api/v1/auth/register \
   -H 'Content-Type: application/json' \
   -d '{"username":"admin","password":"secret123"}'
 ```
@@ -170,7 +170,7 @@ curl -X POST http://localhost:3000/api/v1/auth/register \
 ### Login
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/auth/login \
+curl -X POST http://localhost:3010/api/v1/auth/login \
   -H 'Content-Type: application/json' \
   -d '{"username":"admin","password":"secret123"}'
 ```
@@ -178,7 +178,7 @@ curl -X POST http://localhost:3000/api/v1/auth/login \
 ### Generate API key
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/apikeys/generate \
+curl -X POST http://localhost:3010/api/v1/apikeys/generate \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer <access_token>' \
   -d '{
@@ -191,7 +191,7 @@ curl -X POST http://localhost:3000/api/v1/apikeys/generate \
 ### Create session
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/sessions \
+curl -X POST http://localhost:3010/api/v1/sessions \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer <access_token>' \
   -d '{"sessionName":"sales-1","phoneNumber":"628123456789","webhookUrl":"https://example.com/wa/webhook"}'
@@ -200,7 +200,7 @@ curl -X POST http://localhost:3000/api/v1/sessions \
 ### Connect session
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/sessions/<session-id>/connect \
+curl -X POST http://localhost:3010/api/v1/sessions/<session-id>/connect \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer <access_token>' \
   -d '{"method":"qr","phoneNumber":"628123456789"}'
@@ -211,7 +211,7 @@ Jika belum terkoneksi, response akan berisi `state=awaiting_qr` dan `qrCodeBase6
 ### Send text message
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/sessions/<session-id>/messages/text \
+curl -X POST http://localhost:3010/api/v1/sessions/<session-id>/messages/text \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: <api_key>' \
   -d '{"to":"628123456789","text":"hello from gateway"}'
@@ -230,7 +230,7 @@ curl -X POST http://localhost:3000/api/v1/sessions/<session-id>/messages/text \
 Example refresh token:
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/auth/refresh-token \
+curl -X POST http://localhost:3010/api/v1/auth/refresh-token \
   -H 'Content-Type: application/json' \
   -d '{"refreshToken":"<refresh_token>"}'
 ```
@@ -266,14 +266,14 @@ Endpoint session tambahan:
 Example get QR:
 
 ```bash
-curl http://localhost:3000/api/v1/sessions/<session-id>/qr \
+curl http://localhost:3010/api/v1/sessions/<session-id>/qr \
   -H 'Authorization: Bearer <access_token>'
 ```
 
 Example get device info:
 
 ```bash
-curl http://localhost:3000/api/v1/sessions/<session-id>/info \
+curl http://localhost:3010/api/v1/sessions/<session-id>/info \
   -H 'Authorization: Bearer <access_token>'
 ```
 
@@ -297,7 +297,7 @@ Endpoints:
 Contoh image:
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/sessions/<session-id>/messages/image \
+curl -X POST http://localhost:3010/api/v1/sessions/<session-id>/messages/image \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: <api_key>' \
   -d '{
@@ -310,7 +310,7 @@ curl -X POST http://localhost:3000/api/v1/sessions/<session-id>/messages/image \
 Contoh document:
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/sessions/<session-id>/messages/document \
+curl -X POST http://localhost:3010/api/v1/sessions/<session-id>/messages/document \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: <api_key>' \
   -d '{
@@ -325,7 +325,7 @@ curl -X POST http://localhost:3000/api/v1/sessions/<session-id>/messages/documen
 Contoh location:
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/sessions/<session-id>/messages/location \
+curl -X POST http://localhost:3010/api/v1/sessions/<session-id>/messages/location \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: <api_key>' \
   -d '{
@@ -340,7 +340,7 @@ curl -X POST http://localhost:3000/api/v1/sessions/<session-id>/messages/locatio
 Contoh buttons:
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/sessions/<session-id>/messages/buttons \
+curl -X POST http://localhost:3010/api/v1/sessions/<session-id>/messages/buttons \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: <api_key>' \
   -d '{
@@ -357,7 +357,7 @@ curl -X POST http://localhost:3000/api/v1/sessions/<session-id>/messages/buttons
 Contoh list:
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/sessions/<session-id>/messages/list \
+curl -X POST http://localhost:3010/api/v1/sessions/<session-id>/messages/list \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: <api_key>' \
   -d '{
@@ -378,7 +378,7 @@ curl -X POST http://localhost:3000/api/v1/sessions/<session-id>/messages/list \
 Contoh bulk:
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/sessions/<session-id>/messages/bulk \
+curl -X POST http://localhost:3010/api/v1/sessions/<session-id>/messages/bulk \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: <api_key>' \
   -d '{
@@ -409,7 +409,7 @@ Endpoints:
 Contoh create template text:
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/templates \
+curl -X POST http://localhost:3010/api/v1/templates \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer <access_token>' \
   -d '{
@@ -423,7 +423,7 @@ curl -X POST http://localhost:3000/api/v1/templates \
 Contoh send template:
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/sessions/<session-id>/messages/template \
+curl -X POST http://localhost:3010/api/v1/sessions/<session-id>/messages/template \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: <api_key>' \
   -d '{
@@ -455,7 +455,7 @@ Broadcast mendukung:
 Contoh broadcast custom text:
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/broadcasts \
+curl -X POST http://localhost:3010/api/v1/broadcasts \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: <api_key>' \
   -d '{
@@ -473,7 +473,7 @@ curl -X POST http://localhost:3000/api/v1/broadcasts \
 Contoh report:
 
 ```bash
-curl http://localhost:3000/api/v1/broadcasts/<broadcast-id>/report \
+curl http://localhost:3010/api/v1/broadcasts/<broadcast-id>/report \
   -H 'x-api-key: <api_key>'
 ```
 
@@ -504,7 +504,7 @@ Supported events:
 Contoh create webhook:
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/webhooks \
+curl -X POST http://localhost:3010/api/v1/webhooks \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer <access_token>' \
   -d '{
@@ -544,13 +544,13 @@ Behavior:
 Endpoint:
 
 ```text
-ws://localhost:3000/ws
+ws://localhost:3010/ws
 ```
 
 Contoh:
 
 ```js
-const ws = new WebSocket("ws://localhost:3000/ws");
+const ws = new WebSocket("ws://localhost:3010/ws");
 
 ws.onopen = () => {
   ws.send(
